@@ -8,28 +8,17 @@ l.font = UIFont(name: "SFUIText-Light", size:16.40625)
 .systemFont(of:16, weight:UIFontWeightLight)
 
 
-
-
 -  order UIELemetn from Top to bottom
 
 - make sure hierarchy order is Respected
 
-
 Amelio :
 more visually to the right -> align on right rather tahn left , more natural
-
-
 
 Detect Multilin -> Append \n and set label to mutiline
 
 
-
 == Test out Relative layout between entities
-
-names remove Spaces lowerCaseFirstLetter
-
-
-
 
 Handle single Element Export ==
 
@@ -43,3 +32,9 @@ textAlignement etc
 Handle borders
 
 Quick stevia generation copy code in clipboard
+
+
+Prefix By Cell -> UITableViewCell subclass
+
+
+Pure Ukit exprot and Stevia one

@@ -1,5 +1,5 @@
 {
-    "name" : "UIKit",
+    "name" : "Export for UIKit",
     "identifier" : "com.sachadso.UIKit",
     "version" : "0.0.1",
     "description" : "Pretty much the smallest example Sketch Plugin you could have.",
@@ -7,11 +7,18 @@
     "author" : "Sacha Durand Saint Omer",
     "commands" : [
     {
-      "script" : "UIKit.js",
+      "script" : "UIKitExport.js",
       "handler" : "onRun",
       "shortcut" : "",
-      "name" : "Export UIKit code",
-      "identifier" : "UIKit"
+      "name" : "Copy UIKit code to clipboard",
+      "identifier" : "UIKitExport"
+    },
+    {
+      "script" : "SteviaExport.js",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Copy Stevia code to clipboard",
+      "identifier" : "SteviaExport"
     }
   ]
 }
