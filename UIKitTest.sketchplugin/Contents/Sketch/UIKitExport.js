@@ -48,7 +48,7 @@ write("    convenience init() {")
 write("        self.init(frame:CGRect.zero)")
 write("")
 // View Hierarchy
-
+write("        // View Hierarchy")
 
 labels.map(function(l) {
   write("        " + sanitizeName(l.name) + ".translatesAutoresizingMaskIntoConstraints = false")

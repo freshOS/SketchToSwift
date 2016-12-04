@@ -1,15 +1,11 @@
 issue
 
-
-
-  SF  Fonts
+SF  Fonts
 l.font = UIFont(name: "SFUIText-Light", size:16.40625)
 -->
 .systemFont(of:16, weight:UIFontWeightLight)
 
-
 -  order UIELemetn from Top to bottom
-
 - make sure hierarchy order is Respected
 
 Amelio :
@@ -38,3 +34,15 @@ Prefix By Cell -> UITableViewCell subclass
 
 
 Pure Ukit exprot and Stevia one
+
+
+Handle ellemnts in subgroup
+
+
+detect fillscontainer and do not use width and height but right and bottom
+
+
+Needz unit test
+
+
+Detect ArtboardCell -> UITableViewCEll subclass
