@@ -9,16 +9,18 @@
     {
       "script" : "UIKitExport.js",
       "handler" : "onRun",
-      "shortcut" : "",
+      "shortcut" : "command alt k",
       "name" : "Copy UIKit code to clipboard",
       "identifier" : "UIKitExport"
-    },
-    {
-      "script" : "SteviaExport.js",
-      "handler" : "onRun",
-      "shortcut" : "",
-      "name" : "Copy Stevia code to clipboard",
-      "identifier" : "SteviaExport"
     }
+  ],
+"menu" :
+{
+  "title" : "Copy UIKit code",
+  "isRoot" : true,
+  "items" :
+  [
+   "UIKitExport",
   ]
+},
 }
