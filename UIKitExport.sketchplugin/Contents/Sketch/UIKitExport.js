@@ -31,18 +31,14 @@ selection.iterate(function(item) {
 });
 
 
-/// GENERATED STEVIA CODE
 
+// Header
 write(uikitHeader())
-labels.map(function(l) {
-    write("    let " + sanitizeName(l.name) + " = UILabel()")
-});
-shapes.map(function(v) {
-    write("    let " + sanitizeName(v.name) + " = UIView()")
-});
-write("")
 
+// Declarations
+write(uikitDeclarationsFor(allElements))
 
+// Init
 write(uiviewInit())
 
 // View Hierarchy
@@ -176,6 +172,19 @@ function uiviewInit() {
   return "    convenience init() {" + "\n"
   +      "        self.init(frame:CGRect.zero)" + "\n"
   + "\n"
+}
+
+function uikitDeclarationsFor(elements) {
+  var s = "\n"
+  elements.map(function(e) {
+    if (e.isText) {
+        s += "    let " + sanitizeName(e.name) + " = UILabel()" + "\n"
+    } else if (e.isShape) {
+        s += "    let " + sanitizeName(e.name) + " = UIView()" + "\n"
+    }
+  });
+  s += "\n"
+  return s
 }
 
 function uikitViewHierarchy(elements) {
