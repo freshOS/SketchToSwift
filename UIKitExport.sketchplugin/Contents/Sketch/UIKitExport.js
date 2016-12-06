@@ -30,12 +30,8 @@ selection.iterate(function(item) {
 
 
 /// GENERATED STEVIA CODE
-write("")
-write("import UIKit")
-write("")
-write("")
-write("class UIKitView: UIView {")
-write("")
+
+write(uikitHeader())
 labels.map(function(l) {
     write("    let " + sanitizeName(l.name) + " = UILabel()")
 });
@@ -203,4 +199,23 @@ function lowerCaseFirstLetter(str) {
    return str.charAt(0).toLowerCase() + str.slice(1)
 }
 
+
+
+
 };
+
+
+
+
+
+// Private functions
+
+
+function uikitHeader() {
+  return "\n"
+  + "import UIKit" + "\n"
+    + "\n"
+    + "\n"
+  + "class UIKitView: UIView {"
+  + "\n"
+}
