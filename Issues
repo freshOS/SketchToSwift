@@ -46,3 +46,33 @@ Needz unit test
 
 
 Detect ArtboardCell -> UITableViewCEll subclass
+
+
+- order by frame Y
+- declare in that order
+
+contains "\n' = multiligne?
+
+
+multicolor text -> AttributedString?
+
+UIColors replace by custom ones?
+
+
+color -> detect natvie and wirte ex: . red . white. black etc
+
+// handle UIButton corner Radius
+
+- Support Arboart BG color -> view bg color
+
+
+- Detect Text in style caps -> apply uppercased
+
+
+-- Button border color
+-- Button border radius
+
+
+groups -> greate UIViewSubclasses?
+
+UIButton set titel belongs in content section
