@@ -12,6 +12,7 @@ var document = sketch.selectedDocument
 var selection = document.selectedLayers
 var labels = []
 var shapes = []
+var allElements = []
 
 selection.iterate(function(item) {
     if (item.isArtboard) {
@@ -24,6 +25,7 @@ selection.iterate(function(item) {
                 //log(element.sketchObject.style().fills()[0].color())
                 //log(element.frame)
             }
+            allElements.push(element)
         })
     }
 });
@@ -40,26 +42,11 @@ shapes.map(function(v) {
 });
 write("")
 
-write("    convenience init() {")
-write("        self.init(frame:CGRect.zero)")
-write("")
+
+write(uiviewInit())
+
 // View Hierarchy
-write("        // View Hierarchy")
-
-labels.map(function(l) {
-  write("        " + sanitizeName(l.name) + ".translatesAutoresizingMaskIntoConstraints = false")
-});
-shapes.map(function(v) {
-  write("        " + sanitizeName(v.name) + ".translatesAutoresizingMaskIntoConstraints = false")
-});
-  write("")
-labels.map(function(l) {
-  write("        addSubview(" + sanitizeName(l.name) + ")")
-});
-shapes.map(function(v) {
-  write("        addSubview(" + sanitizeName(v.name) + ")")
-});
-
+write(uikitViewHierarchy(allElements))
 
 write("")
 // Layout
@@ -218,4 +205,24 @@ function uikitHeader() {
     + "\n"
   + "class UIKitView: UIView {"
   + "\n"
+}
+
+function uiviewInit() {
+  return "    convenience init() {" + "\n"
+  +      "        self.init(frame:CGRect.zero)" + "\n"
+  + "\n"
+}
+
+function uikitViewHierarchy(elements) {
+  var s = "\n"
+  s += "        // View Hierarchy"
+  s +=  "\n"
+  elements.map(function(e) {
+    s += "        " + sanitizeName(e.name) + ".translatesAutoresizingMaskIntoConstraints = false" + "\n"
+  });
+  elements.map(function(e) {
+    s += "        addSubview(" + sanitizeName(e.name) + ")" + "\n"
+  });
+
+  return s
 }
