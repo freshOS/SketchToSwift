@@ -114,88 +114,53 @@ write("            .right(" +  (375-(l.frame.x + l.frame.width)) + ")")
     //}
 });
 write("")
+
+
+
 // Style
 write("        // Style")
 write("        backgroundColor = .white")
 labels.map(function(l) {
-
   var elementName = sanitizeName(l.name)
+  var red = l.sketchObject.textColor().red()
+  var green = l.sketchObject.textColor().green()
+  var blue = l.sketchObject.textColor().blue()
+  var alpha = l.sketchObject.textColor().alpha()
+      write("        " + elementName + '.font = UIFont(name: "' + l.sketchObject.fontPostscriptName() + '", size:' + l.sketchObject.fontSize() + ")" )
+      write("        " + elementName + ".textColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+      if (l.alignment == "center") {
+          write("        " + elementName + ".textAlignment = .center")
+      }
+  });
+  shapes.map(function(v) {
+  var elementName = sanitizeName(v.name)
+  var color = v.sketchObject.style().fills()[0].color()
+  var red = color.red()
+  var green = color.green()
+  var blue = color.blue()
+  var alpha = color.alpha()
+      write("        " + elementName + ".backgroundColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+  });
 
 
-var red = l.sketchObject.textColor().red()
-var green = l.sketchObject.textColor().green()
-var blue = l.sketchObject.textColor().blue()
-var alpha = l.sketchObject.textColor().alpha()
-    write("        " + elementName + '.font = UIFont(name: "' + l.sketchObject.fontPostscriptName() + '", size:' + l.sketchObject.fontSize() + ")" )
-    write("        " + elementName + ".textColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
-    if (l.alignment == "center") {
-        write("        " + elementName + ".textAlignment = .center")
-    }
-});
-shapes.map(function(v) {
-var elementName = sanitizeName(v.name)
-var color = v.sketchObject.style().fills()[0].color()
-var red = color.red()
-var green = color.green()
-var blue = color.blue()
-var alpha = color.alpha()
-    write("        " + elementName + ".backgroundColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
-});
-// Content
-write("")
-write("        // Content")
-labels.map(function(l) {
-    write("        " + sanitizeName(l.name) + '.text = "' + l.text + '"')
-});
-
-write("    }")
-write("}")
-
-function lowerCaseFirstLetter(string) {
-    return string.charAt(0).toLowerCase() + string.slice(1);
-}
+  // Content
+  write(uikitContentForLabels(labels))
 
 
-
-
-var fullText = ""
-lines.forEach(function(line) {
-    fullText += line + "\n"
-})
-
-log(fullText)
-
-copyText(fullText)
-
-
-function copyText(text) {
-  var pasteBoard = [NSPasteboard generalPasteboard];
-  [pasteBoard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
-  [pasteBoard setString:text forType:NSPasteboardTypeString];
-}
-
-function sanitizeName(str) {
-   return lowerCaseFirstLetter(removeSpaces(str))
-}
-
-function removeSpaces(str) {
-   return str.replace(/\s+/g, '');
-}
-
-function lowerCaseFirstLetter(str) {
-   return str.charAt(0).toLowerCase() + str.slice(1)
-}
-
-
-
-
+  // Print + copy
+  var fullText = ""
+  lines.forEach(function(line) {
+      fullText += line + "\n"
+  })
+  log(fullText)
+  copyText(fullText)
 };
 
 
 
 
 
-// Private functions
+/// Private functions
 
 
 function uikitHeader() {
@@ -215,14 +180,42 @@ function uiviewInit() {
 
 function uikitViewHierarchy(elements) {
   var s = "\n"
-  s += "        // View Hierarchy"
-  s +=  "\n"
+  s += "        // View Hierarchy" + "\n"
   elements.map(function(e) {
     s += "        " + sanitizeName(e.name) + ".translatesAutoresizingMaskIntoConstraints = false" + "\n"
   });
   elements.map(function(e) {
     s += "        addSubview(" + sanitizeName(e.name) + ")" + "\n"
   });
-
   return s
+}
+
+function uikitContentForLabels(labels) {
+  var s = "\n"
+  s += "        // Content" + "\n"
+  labels.map(function(l) {
+      s += "        " + sanitizeName(l.name) + '.text = "' + l.text + '"' + "\n"
+  });
+  s += "    }" + "\n"
+  s += "}" + "\n"
+  return s
+}
+
+function copyText(text) {
+  var pasteBoard = [NSPasteboard generalPasteboard];
+  [pasteBoard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+  [pasteBoard setString:text forType:NSPasteboardTypeString];
+}
+
+
+function sanitizeName(str) {
+   return lowerCaseFirstLetter(removeSpaces(str))
+}
+
+function lowerCaseFirstLetter(string) {
+    return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+function removeSpaces(str) {
+   return str.replace(/\s+/g, '');
 }
