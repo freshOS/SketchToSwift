@@ -1,5 +1,6 @@
-issue
+# Improvements
 
+## Fonts
 SF  Fonts
 l.font = UIFont(name: "SFUIText-Light", size:16.40625)
 -->
@@ -56,23 +57,29 @@ contains "\n' = multiligne?
 
 multicolor text -> AttributedString?
 
-UIColors replace by custom ones?
-
-
-color -> detect natvie and wirte ex: . red . white. black etc
-
-// handle UIButton corner Radius
-
-- Support Arboart BG color -> view bg color
-
-
+## Text
 - Detect Text in style caps -> apply uppercased
+- Detect character spacing in fonts
+- Detech line spacing
+
+## Colors
+- UIColors replace by custom ones?
+- Detect natvie and write ex: . red . white. black etc
+- Support Artboart BG color -> view bg color
+
+## Radius
+- Detect UIButton corner Radius
 
 
--- Button border color
--- Button border radius
+## Borders
+- Button border color
+- Button border radius
 
-
+## Sketch Groups
 groups -> greate UIViewSubclasses?
 
 UIButton set titel belongs in content section
+
+
+
+## Single Export
