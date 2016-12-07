@@ -1,6 +1,19 @@
 # SketchToSwift
 
 
+
+## Why
+Because integrating views form Sketch has no added value, its just back and forth translating sketch values to swift code. There must be a way to automate this time costly and low added value labor.
+
+## How
+By generating the swift UIKit code from a Sketch Artboard. We can save hours of time \o/
+
+## What
+A Sketch plugin with a simple shortcut that generates basic Swift code form wich you can kickstart developing your view.
+
+
+## About
+
 This is a proof of concept that we can generate UIVIew swift code from Sketch Artboards.
 
 
