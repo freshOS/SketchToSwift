@@ -3,13 +3,13 @@
 
 
 ## Why
-Because integrating views form Sketch has no added value, its just back and forth translating sketch values to swift code. There must be a way to automate this time costly and low added value labor.
+Because **integrating views** form Sketch has **no added value**, its just back and forth translating sketch values to swift code. There must be a way to automate this time costly and low added value labor.
 
 ## How
-By generating the swift UIKit code from a Sketch Artboard. We can save hours of time \o/
+By **generating the swift UIKit code** from a Sketch Artboard. We can save hours of time \o/
 
 ## What
-A Sketch plugin with a simple shortcut that generates basic Swift code form wich you can kickstart developing your view.
+A **Sketch plugin** with a simple shortcut that generates basic Swift code form wich you can kickstart developing your view.
 
 
 ## About
@@ -22,6 +22,8 @@ Generate Swift Code from UIKit Artboards
 
 Sketch plugin for generating native UIKit Stevia code
 
+Yes this will never be perfect (huh wait for AI!), because we all have ouur coding styles etc. But this is not the goal anyway, the goal is to kickstart view dev and save 80% of integration time. Then you are free to change the code as you like :)
+
 
 ## Usage
 - Install (double click) plugin
@@ -29,8 +31,20 @@ Sketch plugin for generating native UIKit Stevia code
 - cmd + alt + k
 - Paste swift Uikit UIView subclass in Xcode \o/
 
+## Get the best out of it
 
-## More
+Here are some rules you can follow to get the best export possible :
+
+- Name your Artboard proprely:
+For instance an Artboard named "Profile" will generate `class ProfileView: UIView `
+- Resize Artboard for your iPhone size (ex: we usually use 375Width for iPhone 7)
+By resizing the artboard with the scale tool, you'll make sure the script will generate the good font sizes etc.
+- Name your sketch layers right in order to get sexy variable names
+- After the scale, you probably have float margins and font size. Making sure these are clean ext 16p instead of 16,01543 will generate cleaner code :)
+- The same Applies to margins and sizes in general
+- Flatten the view hierarchy, extract the items inside groups and bring them to the top level.
+- Order them (usually from the to to the bottom), the generated code will keep the view hierarchy order.
+
 
 ## Improvements
 
