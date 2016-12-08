@@ -28,7 +28,7 @@ Yes this will never be perfect (huh wait for AI!), because we all have ouur codi
 ## Usage
 - Install (double click) plugin
 - Select Artboard
-- cmd + alt + k
+- `cmd` + `alt` + `k`
 - Paste swift Uikit UIView subclass in Xcode \o/
 
 ## Get the best out of it
