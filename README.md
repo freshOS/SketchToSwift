@@ -2,6 +2,11 @@
 
 ![Demo](https://raw.githubusercontent.com/s4cha/SketchToSwift/master/demo.gif)
 
+
+![Language: Javascript](https://img.shields.io/badge/language-javascript-f48041.svg?style=flat)
+[![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/s4cha/SketchToSwift/blob/master/LICENSE)
+[![Release version](https://img.shields.io/badge/release-0.1-blue.svg)]()
+
 ## Why
 Because **integrating views** form Sketch has **no added value**, its just back and forth translating sketch values to swift code. There must be a way to automate this time costly and low added value labor.
 
