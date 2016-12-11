@@ -1,6 +1,6 @@
 # SketchToSwift
 
-
+![Demo](https://raw.githubusercontent.com/s4cha/Localize/master/demo.gif)
 
 ## Why
 Because **integrating views** form Sketch has **no added value**, its just back and forth translating sketch values to swift code. There must be a way to automate this time costly and low added value labor.
