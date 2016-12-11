@@ -49,7 +49,7 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 ## Improvements
 
 ### Fonts
-- Detect SF fonts and use `.systemFont(of:x, weight:UIFontWeightX)` instead of font name
+- Detect SF Display fonts and use `.systemFont(of:x, weight:UIFontWeightX)` instead of font name
 
 ### Text
 - Detect Text in style caps -> apply uppercased
