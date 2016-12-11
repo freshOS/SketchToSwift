@@ -37,11 +37,14 @@ function onRun(context) {
   // Header
   write(uikitHeader(artboardName))
   write("")
-    // Declarations
+
+  // Declarations
   write(uikitDeclarationsFor(allElements))
-    // Init
+
+  // Init
   write(uiviewInit())
-    // View Hierarchy
+
+  // View Hierarchy
   write("")
   write(uikitViewHierarchy(allElements))
 
@@ -121,6 +124,52 @@ function onRun(context) {
       write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightSemibold)")
     } else if (fontName == "SFUIText-Regular") {
       write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ")")
+    } else if (fontName == "SFUIText-Italic") {
+      write("        " + elementName + '.font = .italicSystemFont(ofSize: ' + fontSize + ")")
+    } else if (fontName == "SFUIText-Light") {
+      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightLight)")
+    } else if (fontName == "SFUIText-Heavy") {
+      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightHeavy)")
+    } else if (fontName == "SFUIText-Bold") {
+      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightBold)")
+    } else if (fontName == "SFUIText-Medium") {
+      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightMedium)")
+    } else if (fontName == "SFUIText-LightItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightLight)")
+      write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
+      write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
+      write("        " + elementName + ".font = " + fontName)
+    } else if (fontName == "SFUIText-MediumItalic") {
+          var fontName = elementName + "Font"
+          var fontDescriptorName = elementName + "Descriptor"
+          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightMedium)")
+          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
+          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
+          write("        " + elementName + ".font = " + fontName)
+    } else if (fontName == "SFUIText-SemiboldItalic") {
+          var fontName = elementName + "Font"
+          var fontDescriptorName = elementName + "Descriptor"
+          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightSemibold)")
+          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
+          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
+          write("        " + elementName + ".font = " + fontName)
+    } else if (fontName == "SFUIText-BoldItalic") {
+          var fontName = elementName + "Font"
+          var fontDescriptorName = elementName + "Descriptor"
+          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ")")
+          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])")
+          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
+          write("        " + elementName + ".font = " + fontName)
+    }
+    else if (fontName == "SFUIText-HeavyItalic") {
+          var fontName = elementName + "Font"
+          var fontDescriptorName = elementName + "Descriptor"
+          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightHeavy)")
+          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
+          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
+          write("        " + elementName + ".font = "+ fontName)
     } else {
       write("        " + elementName + '.font = UIFont(name: "' + fontName + '", size:' + fontSize + ")")
     }
