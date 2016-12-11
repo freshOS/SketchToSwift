@@ -100,3 +100,15 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 ## Issues
 Have a layout that breaks the plugin?
 Send it to sachadso@gmail.com for review + open Issue
+
+## Author
+
+Sacha Durand Saint Omer, sachadso@gmail.com
+
+## Contributing
+
+Contributions to SketchToSwift are very welcomed and encouraged!
+
+## License
+
+SketchToSwift is available under the MIT license. See [LICENSE](https://github.com/s4cha/SketchToSwift/blob/master/LICENSE) for more information.
