@@ -106,7 +106,7 @@ Sacha Durand Saint Omer, sachadso@gmail.com
 
 ## Contributing
 
-Contributions to SketchToSwift are very welcomed and encouraged!
+Contributions to SketchToSwift are very welcomed and encouraged! Feel free to try and tackle one of the Improvements above
 
 ## License
 
