@@ -7,10 +7,12 @@ function onRun(context) {
   var lines = []
 
   var artboardName = "DefaultViewName"
+  var artboardBackgroundColor = nil
 
   selection.iterate(function(item) {
       if (item.isArtboard) {
           artboardName = removeSpaces(item.name) + "View"
+        artboardBackgroundColor = item.sketchObject.backgroundColor()
           item.iterate(function(element) {
               if (element.isText) {
                   labels.push(element)
@@ -105,7 +107,14 @@ function onRun(context) {
 
   // Style
   write("        // Style")
-  write("        backgroundColor = .white")
+
+    // Artboard Background Color
+    var red = artboardBackgroundColor.red()
+    var green = artboardBackgroundColor.green()
+    var blue = artboardBackgroundColor.blue()
+    var alpha = artboardBackgroundColor.alpha()
+        write("        backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+
   labels.map(function(l) {
     var elementName = sanitizeName(l.name)
     var red = l.sketchObject.textColor().red()
@@ -141,7 +150,7 @@ function onRun(context) {
     var green = color.green()
     var blue = color.blue()
     var alpha = color.alpha()
-        write("        " + elementName + ".backgroundColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+        write("        " + elementName + ".backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
       write("")
     });
 

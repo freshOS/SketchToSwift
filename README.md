@@ -60,7 +60,6 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 - Multicolor -> Generate AttributedString
 
 ### Colors
-- Support Artboart BG color -> view bg color
 - Detect native and write ex: . red . white. black etc
 - UIColors replace by custom ones?
 - UIColors oftenThe same refactor in one variable
