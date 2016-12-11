@@ -20,14 +20,9 @@ A **Sketch plugin** with a simple shortcut that generates basic Swift code form 
 ## About
 
 This is a proof of concept that we can generate UIVIew swift code from Sketch Artboards.
+Be aware that this is very early in development.
 
-
-Very early and in development
-Generate Swift Code from UIKit Artboards
-
-Sketch plugin for generating native UIKit Stevia code
-
-Yes this will never be perfect (huh wait for AI!), because we all have ouur coding styles etc. But this is not the goal anyway, the goal is to kickstart view dev and save 80% of integration time. Then you are free to change the code as you like :)
+Yes this will never be perfect (huh wait for AI!), because we all have our coding styles etc. But this is not the goal anyway, the goal is to kickstart view dev and save 80% of integration time. Then you are free to change the code as you like :)
 
 
 ## Usage
