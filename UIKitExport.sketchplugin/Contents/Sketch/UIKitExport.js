@@ -140,7 +140,7 @@ function onRun(context) {
     var green = color.green()
     var blue = color.blue()
     var alpha = color.alpha()
-    write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: $alpha)`)
+    write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
     write("")
   });
 
@@ -205,9 +205,7 @@ function uikitHeader(viewName) {
   return `import UIKit
 
 
-class ${viewName} : UIView {
-
-  `
+class ${viewName} : UIView {`
 }
 
 function uiviewInit() {
@@ -231,10 +229,11 @@ function uikitDeclarationsFor(elements) {
 }
 
 function uikitViewHierarchy(elements) {
-  var s = "\n"
+  var s = ""
   elements.map(function(e) {
     s += `        ${sanitizeName(e.name)}.translatesAutoresizingMaskIntoConstraints = false` + "\n"
   });
+  s += "\n"
   elements.reverse().map(function(e) {
     s += `        addSubview(${sanitizeName(e.name)})` + "\n"
   });
@@ -247,60 +246,66 @@ function uikitLayout(elements) {
     var elementName = sanitizeName(v.name)
     // Top
     s += `        addConstraint(
-                NSLayoutConstraint(item: ${elementName},
-                                   attribute: .top,
-                                   relatedBy: .equal,
-                                   toItem: self,
-                                   attribute: .top,
-                                   multiplier: 1,
-                                   constant: ${v.frame.y})
-             )`
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .top,
+                             relatedBy: .equal,
+                             toItem: self,
+                             attribute: .top,
+                             multiplier: 1,
+                             constant: ${v.frame.y})
+        )
+
+`
 
     // Left
     s += `        addConstraint(
-                NSLayoutConstraint(item: ${elementName},
-                                   attribute: .left,
-                                   relatedBy: .equal,
-                                   toItem: self,
-                                   attribute: .left,
-                                   multiplier: 1,
-                                   constant: ${v.frame.x})
-             )`
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .left,
+                             relatedBy: .equal,
+                             toItem: self,
+                             attribute: .left,
+                             multiplier: 1,
+                             constant: ${v.frame.x})
+        )
+
+`
 
     // Width
     s += `        addConstraint(
-                NSLayoutConstraint(item: ${elementName},
-                                   attribute: .width,
-                                   relatedBy: .equal,
-                                   toItem: nil,
-                                   attribute: .notAnAttribute,
-                                   multiplier: 1,
-                                   constant: ${v.frame.width})
-             )`
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .width,
+                             relatedBy: .equal,
+                             toItem: nil,
+                             attribute: .notAnAttribute,
+                             multiplier: 1,
+                             constant: ${v.frame.width})
+        )
+
+`
 
     // Height
     s += `        addConstraint(
-                NSLayoutConstraint(item: ${elementName},
-                                   attribute: .height,
-                                   relatedBy: .equal,
-                                   toItem: nil,
-                                   attribute: .notAnAttribute,
-                                   multiplier: 1,
-                                   constant: ${v.frame.height})
-             )`
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .height,
+                             relatedBy: .equal,
+                             toItem: nil,
+                             attribute: .notAnAttribute,
+                             multiplier: 1,
+                             constant: ${v.frame.height})
+        )
+
+`
   });
   return s
 }
 
 function uikitContentForLabels(labels) {
-  var s = "\n"
-  s += `        // Content
-          ${
-    labels.map(function(l) {
-      s += `${sanitizeName(l.name)}.text = "${l.text}"`
-    }).join('\n')
-  }
+  var contentStr = labels.map(
+    l => `        ${sanitizeName(l.name)}.text = "${l.text}"`
+  ).join('\n')
 
+  var s = "        // Content \n"
+  s += `${contentStr}
       }
   }`
   return s
