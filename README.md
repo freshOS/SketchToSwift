@@ -28,7 +28,8 @@ Yes this will never be perfect (huh wait for AI!), because we all have our codin
 ## Usage
 - Install (double click) plugin
 - Select Artboard
-- `cmd` + `alt` + `k`
+- `cmd` + `alt` + `K` for UIKit code
+- `cmd` + `alt` + `L` for [Stevia](https://github.com/s4cha/Stevia) code
 - Paste swift Uikit UIView subclass in Xcode \o/
 
 ## Get the best out of it
@@ -48,10 +49,10 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 
 ## Improvements
 
-### Fonts
+#### Fonts
 - Detect SF Display fonts and use `.systemFont(of:x, weight:UIFontWeightX)` instead of font name
 
-### Text
+#### Text
 - Detect Text in style caps -> apply uppercased
 - Detect character spacing in fonts -> AttributedString
 - Detech line spacing -> AttributedString
@@ -59,41 +60,36 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 - Detect text alignment all cases
 - Multicolor -> Generate AttributedString
 
-### Colors
+#### Colors
 - Detect native and write ex: . red . white. black etc
 - UIColors replace by custom ones?
 - UIColors oftenThe same refactor in one variable
 
-### Radius
+#### Radius
 - Detect UIButton corner Radius
 
-### Borders
+#### Borders
 - Button border color
 - Button border radius
 
-### Sketch Groups
+#### Sketch Groups
 - groups -> greate UIViewSubclasses?
 - UIButton set title belongs in content section
 
-### layout
+#### layout
 - Detect fillscontainer and do not use width and height but right and bottom laike a human would do
-- Implement relative layout
-- more visually to the right -> align on right rather tahn left , more natural
+- Implement relative layout, like more visually to the right -> align on right rather tahn left , more natural
 
-### Export
+#### Export
 - Handle single Element Export
 
-### Stevia
-- Generate Stevia code plugin dropdown
-- Shortcut !
-
-### UITableViewCell
+#### UITableViewCell
 - Artboard name Suffixed by `Cell` -> UITableViewCell subclass
 
-## Images
+#### Images
 - Find a wa to detect images and create UIImageView instead
 
-### Groups
+#### Groups
 - Think about how to handle them proprely
 
 ## Issues
