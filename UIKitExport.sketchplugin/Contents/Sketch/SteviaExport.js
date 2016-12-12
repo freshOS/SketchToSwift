@@ -43,7 +43,6 @@ function onRun(context) {
   write(uiviewInit())
 
   // View Hierarchy
-  write("")
   write(steviaViewHierarchy(allElements))
 
   // Layout
@@ -116,18 +115,13 @@ function onRun(context) {
   }
 };
 
-
 function steviaHeader(viewName) {
-  return "import Stevia" + "\n" +
-    "\n" +
-    "\n" +
-    "class " + viewName + " : UIView {" +
-    "\n"
-}
+  return `
+  import Stevia
 
-function uiviewInit() {
-  return "    convenience init() {" + "\n" +
-    "        self.init(frame:CGRect.zero)"
+
+  class ${viewName} : UIView {
+    `
 }
 
 function uikitDeclarationsFor(elements) {
@@ -143,6 +137,12 @@ function uikitDeclarationsFor(elements) {
     }
   });
   return s
+}
+
+function uiviewInit() {
+    return `    convenience init() {
+        self.init(frame:CGRect.zero)
+        `
 }
 
 function steviaViewHierarchy(elements) {
