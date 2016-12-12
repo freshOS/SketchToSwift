@@ -53,7 +53,6 @@ function onRun(context) {
   write("")
 
   // Style
-  write(`        // Style`)
 
   // Artboard Background Color
   var red = artboardBackgroundColor.red()
@@ -232,7 +231,7 @@ function uikitDeclarationsFor(elements) {
 }
 
 function uikitViewHierarchy(elements) {
-  var s = `       // View Hierarchy` + "\n"
+  var s = "\n"
   elements.map(function(e) {
     s += `        ${sanitizeName(e.name)}.translatesAutoresizingMaskIntoConstraints = false` + "\n"
   });
@@ -244,7 +243,6 @@ function uikitViewHierarchy(elements) {
 
 function uikitLayout(elements) {
   var s = "\n"
-  s += "        // Layout" + "\n"
   elements.map(function(v) {
     var elementName = sanitizeName(v.name)
     // Top
