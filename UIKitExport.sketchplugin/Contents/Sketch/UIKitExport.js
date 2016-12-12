@@ -49,54 +49,7 @@ function onRun(context) {
   write(uikitViewHierarchy(allElements))
 
   // Layout
-  write("        // Layout")
-  allElements.map(function(v) {
-    var elementName = sanitizeName(v.name)
-
-    // Top
-    write("        addConstraint(")
-    write("            NSLayoutConstraint(item: " + elementName + ",")
-    write("                               attribute: .top,")
-    write("                               relatedBy: .equal,")
-    write("                               toItem: self,")
-    write("                               attribute: .top,")
-    write("                               multiplier: 1,")
-    write("                               constant: " + v.frame.y + ")")
-    write("         )")
-
-    // Left
-    write("        addConstraint(")
-    write("            NSLayoutConstraint(item: " + elementName + ",")
-    write("                               attribute: .left,")
-    write("                               relatedBy: .equal,")
-    write("                               toItem: self,")
-    write("                               attribute: .left,")
-    write("                               multiplier: 1,")
-    write("                               constant: " + v.frame.x + ")")
-    write("         )")
-
-    // Width
-    write("        addConstraint(")
-    write("            NSLayoutConstraint(item: " + elementName + ",")
-    write("                               attribute: .width,")
-    write("                               relatedBy: .equal,")
-    write("                               toItem: nil,")
-    write("                               attribute: .notAnAttribute,")
-    write("                               multiplier: 1,")
-    write("                               constant: " + v.frame.width + ")")
-    write("         )")
-
-    // Height
-    write("        addConstraint(")
-    write("            NSLayoutConstraint(item: " + elementName + ",")
-    write("                               attribute: .height,")
-    write("                               relatedBy: .equal,")
-    write("                               toItem: nil,")
-    write("                               attribute: .notAnAttribute,")
-    write("                               multiplier: 1,")
-    write("                               constant: " + v.frame.height + ")")
-    write("         )")
-  });
+  write(uikitLayout(allElements))
   write("")
 
   // Style
@@ -284,6 +237,58 @@ function uikitViewHierarchy(elements) {
   });
   elements.reverse().map(function(e) {
     s += "        addSubview(" + sanitizeName(e.name) + ")" + "\n"
+  });
+  return s
+}
+
+function uikitLayout(elements) {
+  var s = "\n"
+  s += "        // Layout" + "\n"
+  elements.map(function(v) {
+    var elementName = sanitizeName(v.name)
+    // Top
+    s += "        addConstraint(" + "\n"
+    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
+    s += "                               attribute: .top," + "\n"
+    s += "                               relatedBy: .equal," + "\n"
+    s += "                               toItem: self," + "\n"
+    s += "                               attribute: .top," + "\n"
+    s += "                               multiplier: 1," + "\n"
+    s += "                               constant: " + v.frame.y + ")" + "\n"
+    s += "         )" + "\n"
+
+    // Left
+    s += "        addConstraint(" + "\n"
+    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
+    s += "                               attribute: .left," + "\n"
+    s += "                               relatedBy: .equal," + "\n"
+    s += "                               toItem: self," + "\n"
+    s += "                               attribute: .left," + "\n"
+    s += "                               multiplier: 1," + "\n"
+    s += "                               constant: " + v.frame.x + ")" + "\n"
+    s += "         )" + "\n"
+
+    // Width
+    s += "        addConstraint(" + "\n"
+    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
+    s += "                               attribute: .width," + "\n"
+    s += "                               relatedBy: .equal," + "\n"
+    s += "                               toItem: nil," + "\n"
+    s += "                               attribute: .notAnAttribute," + "\n"
+    s += "                               multiplier: 1," + "\n"
+    s += "                               constant: " + v.frame.width + ")" + "\n"
+    s += "         )" + "\n"
+
+    // Height
+    s += "        addConstraint(" + "\n"
+    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
+    s += "                               attribute: .height," + "\n"
+    s += "                               relatedBy: .equal," + "\n"
+    s += "                               toItem: nil," + "\n"
+    s += "                               attribute: .notAnAttribute," + "\n"
+    s += "                               multiplier: 1," + "\n"
+    s += "                               constant: " + v.frame.height + ")" + "\n"
+    s += "         )" + "\n"
   });
   return s
 }
