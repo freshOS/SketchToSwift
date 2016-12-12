@@ -12,7 +12,7 @@ function onRun(context) {
 
   selection.iterate(function(item) {
     if (item.isArtboard) {
-      artboardName = removeSpaces(item.name) + "View"
+      artboardName = `${removeSpaces(item.name)}View`
       artboardBackgroundColor = item.sketchObject.backgroundColor()
       item.iterate(function(element) {
         if (element.isText) {
@@ -53,14 +53,13 @@ function onRun(context) {
   write("")
 
   // Style
-  write("        // Style")
 
   // Artboard Background Color
   var red = artboardBackgroundColor.red()
   var green = artboardBackgroundColor.green()
   var blue = artboardBackgroundColor.blue()
   var alpha = artboardBackgroundColor.alpha()
-  write("        backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+  write(`        backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
 
   labels.map(function(l) {
     var elementName = sanitizeName(l.name)
@@ -74,64 +73,64 @@ function onRun(context) {
     var fontSize = l.sketchObject.fontSize()
 
     if (fontName == "SFUIText-Semibold") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightSemibold)")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightSemibold)`)
     } else if (fontName == "SFUIText-Regular") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ")")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize})`)
     } else if (fontName == "SFUIText-Italic") {
-      write("        " + elementName + '.font = .italicSystemFont(ofSize: ' + fontSize + ")")
+      write(`        ${elementName}.font = .italicSystemFont(ofSize: ${fontSize})`)
     } else if (fontName == "SFUIText-Light") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightLight)")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightLight)`)
     } else if (fontName == "SFUIText-Heavy") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightHeavy)")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightHeavy)`)
     } else if (fontName == "SFUIText-Bold") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightBold)")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightBold)`)
     } else if (fontName == "SFUIText-Medium") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightMedium)")
+      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightMedium)`)
     } else if (fontName == "SFUIText-LightItalic") {
-      var fontName = elementName + "Font"
-      var fontDescriptorName = elementName + "Descriptor"
-      write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightLight)")
-      write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-      write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-      write("        " + elementName + ".font = " + fontName)
+      var fontName = `${elementName}Font`
+      var fontDescriptorName = `${elementName}Descriptor`
+      write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightLight)`)
+      write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
+      write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
+      write(`        ${elementName}.font = ${fontName}`)
     } else if (fontName == "SFUIText-MediumItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightMedium)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightMedium)`)
+          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
+          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
+          write(`        ${elementName}.font = ${fontName}`)
     } else if (fontName == "SFUIText-SemiboldItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightSemibold)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightSemibold)`)
+          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
+          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
+          write(`        ${elementName}.font = ${fontName}`)
     } else if (fontName == "SFUIText-BoldItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ")")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize})`)
+          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])`)
+          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
+          write(`        ${elementName}.font = ${fontName}`)
     }
     else if (fontName == "SFUIText-HeavyItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightHeavy)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = "+ fontName)
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightHeavy)`)
+          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
+          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
+          write(`        ${elementName}.font = ${fontName}`)
     } else {
-      write("        " + elementName + '.font = UIFont(name: "' + fontName + '", size:' + fontSize + ")")
+      write(`        ${elementName}.font = UIFont(name: "${fontName}", size:${fontSize})`)
     }
 
-    write("        " + elementName + ".textColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+    write(`        ${elementName}.textColor =  UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
     if (l.alignment == "center") {
-      write("        " + elementName + ".textAlignment = .center")
+      write(`        ${elementName}.textAlignment = .center`)
     }
-    write("        " + elementName + ".numberOfLines = 0")
+    write(`        ${elementName}.numberOfLines = 0`)
     write("")
   });
   shapes.map(function(v) {
@@ -141,7 +140,7 @@ function onRun(context) {
     var green = color.green()
     var blue = color.blue()
     var alpha = color.alpha()
-    write("        " + elementName + ".backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+    write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
     write("")
   });
 
@@ -151,24 +150,24 @@ function onRun(context) {
     var elementName = sanitizeName(v.name)
     v.iterate(function(item) {
       if (item.isText) {
-        write("        " + elementName + '.setTitle("' + item.text + '",for: .normal)')
+        write(`        ${elementName}.setTitle("${item.text}",for: .normal)`)
           //Title color
         var color = item.sketchObject.textColor()
         var red = color.red()
         var green = color.green()
         var blue = color.blue()
         var alpha = color.alpha()
-        write("        " + elementName + ".setTitleColor(UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + "), for: . normal)")
+        write(`        ${elementName}.setTitleColor(UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha}), for: . normal)`)
 
         // Button font
         var fontName = item.sketchObject.fontPostscriptName()
         var fontSize = item.sketchObject.fontSize()
         if (fontName == "SFUIText-Semibold") {
-          write("        " + elementName + '.titleLabel?.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightSemibold)")
+          write(`        ${elementName}.titleLabel?.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightSemibold)`)
         } else if (fontName == "SFUIText-Regular") {
-          write("        " + elementName + '.titleLabel?.font = .systemFont(ofSize: ' + fontSize + ")")
+          write(`        ${elementName}.titleLabel?.font = .systemFont(ofSize: ${fontSize})`)
         } else {
-          write("        " + elementName + '.titleLabel?.font = UIFont(name: "' + fontName + '", size:' + fontSize + ")")
+          write(`        ${elementName}.titleLabel?.font = UIFont(name: "${fontName}", size:${fontSize})`)
         }
       } else if (item.isShape) {
         var color = item.sketchObject.style().fills()[0].color()
@@ -176,7 +175,7 @@ function onRun(context) {
         var green = color.green()
         var blue = color.blue()
         var alpha = color.alpha()
-        write("        " + elementName + ".backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
+        write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
       }
     });
     write("")
@@ -203,104 +202,112 @@ function onRun(context) {
 
 
 function uikitHeader(viewName) {
-  return "import UIKit" + "\n" +
-    "\n" +
-    "\n" +
-    "class " + viewName + " : UIView {" +
-    "\n"
+  return `import UIKit
+
+
+class ${viewName} : UIView {`
 }
 
 function uiviewInit() {
-  return "    convenience init() {" + "\n" +
-    "        self.init(frame:CGRect.zero)"
+  return `    convenience init() {
+        self.init(frame:CGRect.zero)`
 }
 
 function uikitDeclarationsFor(elements) {
   var s = ""
   elements.map(function(e) {
     if (e.isText) {
-      s += "    let " + sanitizeName(e.name) + " = UILabel()" + "\n"
+      s += `    let ${sanitizeName(e.name)} = UILabel()\n`
     } else if (e.isShape) {
-      s += "    let " + sanitizeName(e.name) + " = UIView()" + "\n"
+      s += `    let ${sanitizeName(e.name)} = UIView()\n`
     } else if (e.isGroup) {
       // Only if contains button
-      s += "    let " + sanitizeName(e.name) + " = UIButton()" + "\n"
+      s += `    let ${sanitizeName(e.name)} = UIButton()\n`
     }
   });
   return s
 }
 
 function uikitViewHierarchy(elements) {
-  var s = "        // View Hierarchy" + "\n"
+  var s = ""
   elements.map(function(e) {
-    s += "        " + sanitizeName(e.name) + ".translatesAutoresizingMaskIntoConstraints = false" + "\n"
+    s += `        ${sanitizeName(e.name)}.translatesAutoresizingMaskIntoConstraints = false` + "\n"
   });
+  s += "\n"
   elements.reverse().map(function(e) {
-    s += "        addSubview(" + sanitizeName(e.name) + ")" + "\n"
+    s += `        addSubview(${sanitizeName(e.name)})` + "\n"
   });
   return s
 }
 
 function uikitLayout(elements) {
   var s = "\n"
-  s += "        // Layout" + "\n"
   elements.map(function(v) {
     var elementName = sanitizeName(v.name)
     // Top
-    s += "        addConstraint(" + "\n"
-    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
-    s += "                               attribute: .top," + "\n"
-    s += "                               relatedBy: .equal," + "\n"
-    s += "                               toItem: self," + "\n"
-    s += "                               attribute: .top," + "\n"
-    s += "                               multiplier: 1," + "\n"
-    s += "                               constant: " + v.frame.y + ")" + "\n"
-    s += "         )" + "\n"
+    s += `        addConstraint(
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .top,
+                             relatedBy: .equal,
+                             toItem: self,
+                             attribute: .top,
+                             multiplier: 1,
+                             constant: ${v.frame.y})
+        )
+
+`
 
     // Left
-    s += "        addConstraint(" + "\n"
-    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
-    s += "                               attribute: .left," + "\n"
-    s += "                               relatedBy: .equal," + "\n"
-    s += "                               toItem: self," + "\n"
-    s += "                               attribute: .left," + "\n"
-    s += "                               multiplier: 1," + "\n"
-    s += "                               constant: " + v.frame.x + ")" + "\n"
-    s += "         )" + "\n"
+    s += `        addConstraint(
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .left,
+                             relatedBy: .equal,
+                             toItem: self,
+                             attribute: .left,
+                             multiplier: 1,
+                             constant: ${v.frame.x})
+        )
+
+`
 
     // Width
-    s += "        addConstraint(" + "\n"
-    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
-    s += "                               attribute: .width," + "\n"
-    s += "                               relatedBy: .equal," + "\n"
-    s += "                               toItem: nil," + "\n"
-    s += "                               attribute: .notAnAttribute," + "\n"
-    s += "                               multiplier: 1," + "\n"
-    s += "                               constant: " + v.frame.width + ")" + "\n"
-    s += "         )" + "\n"
+    s += `        addConstraint(
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .width,
+                             relatedBy: .equal,
+                             toItem: nil,
+                             attribute: .notAnAttribute,
+                             multiplier: 1,
+                             constant: ${v.frame.width})
+        )
+
+`
 
     // Height
-    s += "        addConstraint(" + "\n"
-    s += "            NSLayoutConstraint(item: " + elementName + "," + "\n"
-    s += "                               attribute: .height," + "\n"
-    s += "                               relatedBy: .equal," + "\n"
-    s += "                               toItem: nil," + "\n"
-    s += "                               attribute: .notAnAttribute," + "\n"
-    s += "                               multiplier: 1," + "\n"
-    s += "                               constant: " + v.frame.height + ")" + "\n"
-    s += "         )" + "\n"
+    s += `        addConstraint(
+          NSLayoutConstraint(item: ${elementName},
+                             attribute: .height,
+                             relatedBy: .equal,
+                             toItem: nil,
+                             attribute: .notAnAttribute,
+                             multiplier: 1,
+                             constant: ${v.frame.height})
+        )
+
+`
   });
   return s
 }
 
 function uikitContentForLabels(labels) {
-  var s = "\n"
-  s += "        // Content" + "\n"
-  labels.map(function(l) {
-    s += "        " + sanitizeName(l.name) + '.text = "' + l.text + '"' + "\n"
-  });
-  s += "    }" + "\n"
-  s += "}"
+  var contentStr = labels.map(
+    l => `        ${sanitizeName(l.name)}.text = "${l.text}"`
+  ).join('\n')
+
+  var s = "        // Content \n"
+  s += `${contentStr}
+      }
+  }`
   return s
 }
 

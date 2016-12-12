@@ -92,6 +92,9 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 #### Groups
 - Think about how to handle them proprely
 
+## Known issues
+This plugin only supports Sketch v41 and higher at the moment.
+
 ## Issues
 Have a layout that breaks the plugin?
 Send it to sachadso@gmail.com for review + open Issue
