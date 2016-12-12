@@ -33,7 +33,6 @@ function onRun(context) {
   shapes = shapes.reverse()
   buttons = buttons.reverse()
 
-
   // Header
   write(steviaHeader(artboardName))
 
@@ -51,9 +50,6 @@ function onRun(context) {
   write(steviaLayout(allElements))
   write("")
 
-  // Style
-  write("        // Style")
-
   // Artboard Background Color
   var red = artboardBackgroundColor.red()
   var green = artboardBackgroundColor.green()
@@ -61,90 +57,10 @@ function onRun(context) {
   var alpha = artboardBackgroundColor.alpha()
   write("        backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
 
-  labels.map(function(l) {
-    var elementName = sanitizeName(l.name)
-    var red = l.sketchObject.textColor().red()
-    var green = l.sketchObject.textColor().green()
-    var blue = l.sketchObject.textColor().blue()
-    var alpha = l.sketchObject.textColor().alpha()
-
-    // Special case for native fonts
-    var fontName = l.sketchObject.fontPostscriptName()
-    var fontSize = l.sketchObject.fontSize()
-
-    if (fontName == "SFUIText-Semibold") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightSemibold)")
-    } else if (fontName == "SFUIText-Regular") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ")")
-    } else if (fontName == "SFUIText-Italic") {
-      write("        " + elementName + '.font = .italicSystemFont(ofSize: ' + fontSize + ")")
-    } else if (fontName == "SFUIText-Light") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightLight)")
-    } else if (fontName == "SFUIText-Heavy") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightHeavy)")
-    } else if (fontName == "SFUIText-Bold") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightBold)")
-    } else if (fontName == "SFUIText-Medium") {
-      write("        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightMedium)")
-    } else if (fontName == "SFUIText-LightItalic") {
-      var fontName = elementName + "Font"
-      var fontDescriptorName = elementName + "Descriptor"
-      write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightLight)")
-      write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-      write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-      write("        " + elementName + ".font = " + fontName)
-    } else if (fontName == "SFUIText-MediumItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightMedium)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
-    } else if (fontName == "SFUIText-SemiboldItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightSemibold)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
-    } else if (fontName == "SFUIText-BoldItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ")")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = " + fontName)
-    }
-    else if (fontName == "SFUIText-HeavyItalic") {
-          var fontName = elementName + "Font"
-          var fontDescriptorName = elementName + "Descriptor"
-          write("        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightHeavy)")
-          write("        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)")
-          write("        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)")
-          write("        " + elementName + ".font = "+ fontName)
-    } else {
-      write("        " + elementName + '.font = UIFont(name: "' + fontName + '", size:' + fontSize + ")")
-    }
-
-    write("        " + elementName + ".textColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
-    if (l.alignment == "center") {
-      write("        " + elementName + ".textAlignment = .center")
-    }
-    write("        " + elementName + ".numberOfLines = 0")
-    write("")
-  });
-  shapes.map(function(v) {
-    var elementName = sanitizeName(v.name)
-    var color = v.sketchObject.style().fills()[0].color()
-    var red = color.red()
-    var green = color.green()
-    var blue = color.blue()
-    var alpha = color.alpha()
-    write("        " + elementName + ".backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")")
-    write("")
-  });
-
-
+  // Style
+  write(steviaStyleLabels(labels))
+  write(steviaStyleShapes(shapes))
+  
   // Buttons
   buttons.map(function(v) {
     var elementName = sanitizeName(v.name)
@@ -231,17 +147,17 @@ function uikitDeclarationsFor(elements) {
 
 function steviaViewHierarchy(elements) {
   var s = "        // View Hierarchy" + "\n"
-  s += "           sv(" + "\n"
+  s += "         sv(" + "\n"
   var count = 0
   elements.reverse().map(function(e) {
     if (count == elements.length -1) {
-    s += "             " + sanitizeName(e.name) + "\n"
+    s += "           " + sanitizeName(e.name) + "\n"
   } else {
-    s += "             " + sanitizeName(e.name) + "," + "\n"
+    s += "           " + sanitizeName(e.name) + "," + "\n"
   }
     count++
   });
-  s += "           )" + "\n"
+  s += "         )" + "\n"
   return s
 }
 
@@ -257,6 +173,98 @@ function steviaLayout(elements) {
   });
   return s
 }
+
+function steviaStyleLabels(labels) {
+  var s = "\n"
+  s += "        // Style" + "\n"
+  labels.map(function(l) {
+    var elementName = sanitizeName(l.name)
+    var red = l.sketchObject.textColor().red()
+    var green = l.sketchObject.textColor().green()
+    var blue = l.sketchObject.textColor().blue()
+    var alpha = l.sketchObject.textColor().alpha()
+
+    // Special case for native fonts
+    var fontName = l.sketchObject.fontPostscriptName()
+    var fontSize = l.sketchObject.fontSize()
+
+    if (fontName == "SFUIText-Semibold") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightSemibold)" + "\n"
+    } else if (fontName == "SFUIText-Regular") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ")" + "\n"
+    } else if (fontName == "SFUIText-Italic") {
+      s += "        " + elementName + '.font = .italicSystemFont(ofSize: ' + fontSize + ")" + "\n"
+    } else if (fontName == "SFUIText-Light") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightLight)" + "\n"
+    } else if (fontName == "SFUIText-Heavy") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightHeavy)" + "\n"
+    } else if (fontName == "SFUIText-Bold") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightBold)" + "\n"
+    } else if (fontName == "SFUIText-Medium") {
+      s += "        " + elementName + '.font = .systemFont(ofSize: ' + fontSize + ", weight: UIFontWeightMedium)" + "\n"
+    } else if (fontName == "SFUIText-LightItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      s += "        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightLight)" + "\n"
+      s += "        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)" + "\n"
+      s += "        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)" + "\n"
+      s += "        " + elementName + ".font = " + fontName + "\n"
+    } else if (fontName == "SFUIText-MediumItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      s += "        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightMedium)" + "\n"
+      s += "        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)" + "\n"
+      s += "        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)" + "\n"
+      s += "        " + elementName + ".font = " + fontName + "\n"
+    } else if (fontName == "SFUIText-SemiboldItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      s += "        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightSemibold)" + "\n"
+      s += "        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)" + "\n"
+      s += "        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)" + "\n"
+      s += "        " + elementName + ".font = " + fontName + "\n"
+    } else if (fontName == "SFUIText-BoldItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      s += "        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ")" + "\n"
+      s += "        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])" + "\n"
+      s += "        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)" + "\n"
+      s += "        " + elementName + ".font = " + fontName + "\n"
+    }
+    else if (fontName == "SFUIText-HeavyItalic") {
+      var fontName = elementName + "Font"
+      var fontDescriptorName = elementName + "Descriptor"
+      s += "        var " + fontName + ": UIFont = .systemFont(ofSize:" + fontSize + ", weight: UIFontWeightHeavy)" + "\n"
+      s += "        let " + fontDescriptorName + " = " + fontName + ".fontDescriptor.withSymbolicTraits(.traitItalic)" + "\n"
+      s += "        " + fontName + " = UIFont(descriptor: " + fontDescriptorName + "!, size: 0)" + "\n"
+      s += "        " + elementName + ".font = "+ fontName + "\n"
+    } else {
+      s += "        " + elementName + '.font = UIFont(name: "' + fontName + '", size:' + fontSize + ")" + "\n"
+    }
+
+    s += "        " + elementName + ".textColor =  UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")" + "\n"
+    if (l.alignment == "center") {
+      s += "        " + elementName + ".textAlignment = .center" + "\n"
+    }
+    s += "        " + elementName + ".numberOfLines = 0" + "\n"
+  });
+  return s
+}
+
+function steviaStyleShapes(shapes) {
+  var s = ""
+  shapes.map(function(v) {
+    var elementName = sanitizeName(v.name)
+    var color = v.sketchObject.style().fills()[0].color()
+    var red = color.red()
+    var green = color.green()
+    var blue = color.blue()
+    var alpha = color.alpha()
+    s += "        " + elementName + ".backgroundColor = UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")" + "\n"
+  });
+  return  s
+}
+
 
 function uikitContentForLabels(labels) {
   var s = "\n"
