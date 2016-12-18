@@ -2,7 +2,7 @@
     "name" : "Export for UIKit",
     "identifier" : "com.sachadso.UIKit",
     "version" : "0.0.2",
-    "description" : "Export UIKit code directly for Sketch !",
+    "description" : "Export UIKit code directly for Sketch!",
     "authorEmail" : "sachadso@gmail.com",
     "author" : "Sacha Durand Saint Omer",
     "commands" : [
@@ -24,7 +24,6 @@
 "menu" :
 {
   "title" : "Copy UIKit code",
-  "isRoot" : true,
   "items" :
   [
    "UIKitExport",
