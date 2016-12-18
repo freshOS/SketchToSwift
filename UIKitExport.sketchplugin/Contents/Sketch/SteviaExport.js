@@ -140,9 +140,18 @@ function uikitDeclarationsFor(elements) {
 }
 
 function uiviewInit() {
-    return `    convenience init() {
-        self.init(frame:CGRect.zero)
-        `
+    return `    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+      `
 }
 
 function steviaViewHierarchy(elements) {
