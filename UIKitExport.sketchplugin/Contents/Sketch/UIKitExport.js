@@ -1,5 +1,52 @@
 function onRun(context) {
 
+  var isArtboardSelected = false
+  var selection = context.api().selectedDocument.selectedLayers
+
+  selection.iterate(function(item) {
+    if (item.isArtboard) {
+      isArtboardSelected = true
+    }
+  });
+
+  if (isArtboardSelected) {
+    parseArtboard(context)
+  } else {
+    parseSingleElement(context)
+  }
+  
+};
+
+
+function parseSingleElement(context) { 
+  var lines = []
+  var selection = context.api().selectedDocument.selectedLayers
+  selection.iterate(function(item) {
+    if (item.isText) {
+      write(uikitDeclarationsForSingleText(item))
+      write(`${sanitizeName(item.name)}.text = "${item.text}"`)
+      write(uikitStyleForText(item))
+    }
+  });
+
+  // Print + copy
+  var fullText = ""
+  lines.forEach(function(line) {
+    fullText += line + "\n"
+  })
+  log(fullText)
+  copyText(fullText)
+
+
+  function write(text) {
+    lines.push(text)
+  }
+
+}
+
+
+function parseArtboard(context) {
+
   var selection = context.api().selectedDocument.selectedLayers
   var labels = []
   var buttons = []
@@ -27,6 +74,7 @@ function onRun(context) {
       })
     }
   });
+
 
   allElements = allElements.reverse()
   labels = labels.reverse()
@@ -62,76 +110,7 @@ function onRun(context) {
   write(`        backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
 
   labels.map(function(l) {
-    var elementName = sanitizeName(l.name)
-    var red = l.sketchObject.textColor().red()
-    var green = l.sketchObject.textColor().green()
-    var blue = l.sketchObject.textColor().blue()
-    var alpha = l.sketchObject.textColor().alpha()
-
-    // Special case for native fonts
-    var fontName = l.sketchObject.fontPostscriptName()
-    var fontSize = l.sketchObject.fontSize()
-
-    if (fontName == "SFUIText-Semibold") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightSemibold)`)
-    } else if (fontName == "SFUIText-Regular") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize})`)
-    } else if (fontName == "SFUIText-Italic") {
-      write(`        ${elementName}.font = .italicSystemFont(ofSize: ${fontSize})`)
-    } else if (fontName == "SFUIText-Light") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightLight)`)
-    } else if (fontName == "SFUIText-Heavy") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightHeavy)`)
-    } else if (fontName == "SFUIText-Bold") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightBold)`)
-    } else if (fontName == "SFUIText-Medium") {
-      write(`        ${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightMedium)`)
-    } else if (fontName == "SFUIText-LightItalic") {
-      var fontName = `${elementName}Font`
-      var fontDescriptorName = `${elementName}Descriptor`
-      write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightLight)`)
-      write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
-      write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
-      write(`        ${elementName}.font = ${fontName}`)
-    } else if (fontName == "SFUIText-MediumItalic") {
-          var fontName = `${elementName}Font`
-          var fontDescriptorName = `${elementName}Descriptor`
-          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightMedium)`)
-          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
-          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
-          write(`        ${elementName}.font = ${fontName}`)
-    } else if (fontName == "SFUIText-SemiboldItalic") {
-          var fontName = `${elementName}Font`
-          var fontDescriptorName = `${elementName}Descriptor`
-          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightSemibold)`)
-          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
-          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
-          write(`        ${elementName}.font = ${fontName}`)
-    } else if (fontName == "SFUIText-BoldItalic") {
-          var fontName = `${elementName}Font`
-          var fontDescriptorName = `${elementName}Descriptor`
-          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize})`)
-          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])`)
-          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
-          write(`        ${elementName}.font = ${fontName}`)
-    }
-    else if (fontName == "SFUIText-HeavyItalic") {
-          var fontName = `${elementName}Font`
-          var fontDescriptorName = `${elementName}Descriptor`
-          write(`        var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightHeavy)`)
-          write(`        let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`)
-          write(`        ${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`)
-          write(`        ${elementName}.font = ${fontName}`)
-    } else {
-      write(`        ${elementName}.font = UIFont(name: "${fontName}", size:${fontSize})`)
-    }
-
-    write(`        ${elementName}.textColor =  UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
-    if (l.alignment == "center") {
-      write(`        ${elementName}.textAlignment = .center`)
-    }
-    write(`        ${elementName}.numberOfLines = 0`)
-    write("")
+    write(uikitStyleForText(l))
   });
   shapes.map(function(v) {
     var elementName = sanitizeName(v.name)
@@ -198,7 +177,96 @@ function onRun(context) {
   function write(text) {
     lines.push(text)
   }
-};
+}
+
+function uikitStyleForText(l) {
+    var s = ""
+    var elementName = sanitizeName(l.name)
+    var red = l.sketchObject.textColor().red()
+    var green = l.sketchObject.textColor().green()
+    var blue = l.sketchObject.textColor().blue()
+    var alpha = l.sketchObject.textColor().alpha()
+
+    // Special case for native fonts
+    var fontName = l.sketchObject.fontPostscriptName()
+    var fontSize = l.sketchObject.fontSize()
+
+    if (fontName == "SFUIText-Semibold") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightSemibold)`
+    } else if (fontName == "SFUIText-Regular") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize})`
+    } else if (fontName == "SFUIText-Italic") {
+      s += `${elementName}.font = .italicSystemFont(ofSize: ${fontSize})`
+    } else if (fontName == "SFUIText-Light") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightLight)`
+    } else if (fontName == "SFUIText-Heavy") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightHeavy)`
+    } else if (fontName == "SFUIText-Bold") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightBold)`
+    } else if (fontName == "SFUIText-Medium") {
+      s += `${elementName}.font = .systemFont(ofSize: ${fontSize}, weight: UIFontWeightMedium)`
+    } else if (fontName == "SFUIText-LightItalic") {
+      var fontName = `${elementName}Font`
+      var fontDescriptorName = `${elementName}Descriptor`
+      s += `var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightLight)`
+      s += `let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`
+      s += `${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`
+      s += `${elementName}.font = ${fontName}`
+    } else if (fontName == "SFUIText-MediumItalic") {
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          s += `var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightMedium)`
+          s += "\n"
+          s += `let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`
+          s += "\n"
+          s += `${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`
+          s += "\n"
+          s += `${elementName}.font = ${fontName}`
+    } else if (fontName == "SFUIText-SemiboldItalic") {
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          s += `var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightSemibold)`
+          s += "\n"
+          s += `let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`
+          s += "\n"
+          s += `${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`
+          s += "\n"
+          s += `${elementName}.font = ${fontName}`
+    } else if (fontName == "SFUIText-BoldItalic") {
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          s += `var ${fontName}: UIFont = .systemFont(ofSize:${fontSize})`
+          s += "\n"
+          s += `let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])`
+          s += "\n"
+          s += `${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`
+          s += "\n"
+          s += `${elementName}.font = ${fontName}`
+    } else if (fontName == "SFUIText-HeavyItalic") {
+          var fontName = `${elementName}Font`
+          var fontDescriptorName = `${elementName}Descriptor`
+          s += `var ${fontName}: UIFont = .systemFont(ofSize:${fontSize}, weight: UIFontWeightHeavy)`
+          s += "\n"
+          s += `let ${fontDescriptorName} = ${fontName}.fontDescriptor.withSymbolicTraits(.traitItalic)`
+          s += "\n"
+          s += `${fontName} = UIFont(descriptor: ${fontDescriptorName}!, size: 0)`
+          s += "\n"
+          s += `${elementName}.font = ${fontName}`
+    } else {
+      s += `${elementName}.font = UIFont(name: "${fontName}", size:${fontSize})`
+    }
+    s += "\n"
+
+    s += `${elementName}.textColor =  UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`
+    s += "\n"
+    if (l.alignment == "center") {
+      s += `${elementName}.textAlignment = .center`
+      s += "\n"
+    }
+    s += `${elementName}.numberOfLines = 0`
+    s += ""
+    return s
+}
 
 
 function uikitHeader(viewName) {
@@ -224,19 +292,36 @@ function uiviewInit() {
 }
 
 function uikitDeclarationsFor(elements) {
-  var s = ""
+  var s = "" 
   elements.map(function(e) {
+    s += uikitDeclarationsForSingle(e)
+    s += "\n"
+  });
+  return s
+}
+
+function uikitDeclarationsForSingleText(e) {
+  return uikitDeclarationsForSingle(e)
+}
+
+function uikitDeclarationsForSingle(e) {
+  var s = ""
     if (e.isText) {
-      s += `    let ${sanitizeName(e.name)} = UILabel()\n`
+      s += uikitDeclarationsForText(e)
     } else if (e.isShape) {
       s += `    let ${sanitizeName(e.name)} = UIView()\n`
     } else if (e.isGroup) {
       // Only if contains button
       s += `    let ${sanitizeName(e.name)} = UIButton()\n`
     }
-  });
   return s
 }
+
+
+function uikitDeclarationsForText(e) {
+   return `let ${sanitizeName(e.name)} = UILabel()`
+}
+
 
 function uikitViewHierarchy(elements) {
   var s = ""
