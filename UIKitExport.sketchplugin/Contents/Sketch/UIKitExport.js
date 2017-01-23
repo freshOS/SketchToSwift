@@ -1,4 +1,4 @@
-function onRun(context) {
+function onRun(context) { // Comment to launch script in Sketch "Custom Script"
 
   var isArtboardSelected = false
   var selection = context.api().selectedDocument.selectedLayers
@@ -14,8 +14,7 @@ function onRun(context) {
   } else {
     parseSingleElement(context)
   }
-  
-};
+}; // Comment to launch script in Sketch "Custom Script" 
 
 
 function parseSingleElement(context) { 
@@ -103,11 +102,8 @@ function parseArtboard(context) {
   // Style
 
   // Artboard Background Color
-  var red = artboardBackgroundColor.red()
-  var green = artboardBackgroundColor.green()
-  var blue = artboardBackgroundColor.blue()
-  var alpha = artboardBackgroundColor.alpha()
-  write(`        backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
+  write(`        backgroundColor = ${uiColorLineForColor(artboardBackgroundColor)}`)
+
 
   labels.map(function(l) {
     write(uikitStyleForText(l))
@@ -115,11 +111,7 @@ function parseArtboard(context) {
   shapes.map(function(v) {
     var elementName = sanitizeName(v.name)
     var color = v.sketchObject.style().fills()[0].color()
-    var red = color.red()
-    var green = color.green()
-    var blue = color.blue()
-    var alpha = color.alpha()
-    write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
+    write(`        ${elementName}.backgroundColor = ${uiColorLineForColor(color)}`)
     write("")
   });
 
@@ -130,13 +122,9 @@ function parseArtboard(context) {
     v.iterate(function(item) {
       if (item.isText) {
         write(`        ${elementName}.setTitle("${item.text}",for: .normal)`)
-          //Title color
+        //Title color
         var color = item.sketchObject.textColor()
-        var red = color.red()
-        var green = color.green()
-        var blue = color.blue()
-        var alpha = color.alpha()
-        write(`        ${elementName}.setTitleColor(UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha}), for: . normal)`)
+        write(`        ${elementName}.setTitleColor(${uiColorLineForColor(color)}, for: . normal)`)
 
         // Button font
         var fontName = item.sketchObject.fontPostscriptName()
@@ -150,11 +138,7 @@ function parseArtboard(context) {
         }
       } else if (item.isShape) {
         var color = item.sketchObject.style().fills()[0].color()
-        var red = color.red()
-        var green = color.green()
-        var blue = color.blue()
-        var alpha = color.alpha()
-        write(`        ${elementName}.backgroundColor = UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`)
+        write(`        ${elementName}.backgroundColor = ${uiColorLineForColor(color)}`)
       }
     });
     write("")
@@ -182,10 +166,6 @@ function parseArtboard(context) {
 function uikitStyleForText(l) {
     var s = ""
     var elementName = sanitizeName(l.name)
-    var red = l.sketchObject.textColor().red()
-    var green = l.sketchObject.textColor().green()
-    var blue = l.sketchObject.textColor().blue()
-    var alpha = l.sketchObject.textColor().alpha()
 
     // Special case for native fonts
     var fontName = l.sketchObject.fontPostscriptName()
@@ -256,8 +236,7 @@ function uikitStyleForText(l) {
       s += `${elementName}.font = UIFont(name: "${fontName}", size:${fontSize})`
     }
     s += "\n"
-
-    s += `${elementName}.textColor =  UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`
+    s += uicolorforText(l)
     s += "\n"
     if (l.alignment == "center") {
       s += `${elementName}.textAlignment = .center`
@@ -266,6 +245,43 @@ function uikitStyleForText(l) {
     s += `${elementName}.numberOfLines = 0`
     s += ""
     return s
+}
+
+function uicolorforText(text) {
+   return `${sanitizeName(text.name)}.textColor = ${uiColorLineForColor(text.sketchObject.textColor())}`
+}
+
+function uiColorLineForColor(color) {
+
+    let colorMap = {
+        "1111": "white",
+        "0001": "black",
+        "1001": "red",
+        "0101": "green",
+        "0011": "blue",
+        "0111": "cyan",
+        "1011": "magenta",
+        "10.501": "orange",
+        "0.500.51": "purple",
+        "0.60.40.21": "brown",
+        "1101": "yellow",
+        "0.50.50.51": "gray",
+        "0.670.670.671": "lightGray",
+        "0.330.330.331": "darkGray",
+        "0000": "clear"
+    }
+
+    var red = Math.round(color.red() * 100) / 100
+    var green = Math.round(color.green() * 100) / 100  
+    var blue = Math.round(color.blue() * 100) / 100  
+    var alpha = Math.round(color.alpha() * 100) / 100  
+    let colorKey = `${red}${green}${blue}${alpha}`
+    var color = colorMap[colorKey]
+    if (color != undefined) {
+      return `.${color}`
+    }
+        
+    return `UIColor(red: ${red}, green: ${green}, blue: ${blue}, alpha: ${alpha})`
 }
 
 

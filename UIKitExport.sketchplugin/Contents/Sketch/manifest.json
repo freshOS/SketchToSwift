@@ -1,7 +1,7 @@
 {
     "name" : "Export for UIKit",
     "identifier" : "com.sachadso.UIKit",
-    "version" : "0.0.3",
+    "version" : "0.0.4",
     "description" : "Export UIKit code directly for Sketch!",
     "authorEmail" : "sachadso@gmail.com",
     "author" : "Sacha Durand Saint Omer",
@@ -10,20 +10,20 @@
       "script" : "UIKitExport.js",
       "handler" : "onRun",
       "shortcut" : "command alt k",
-      "name" : "Copy UIKit code to clipboard",
+      "name" : "Copy UIKit Code",
       "identifier" : "UIKitExport"
     },
     {
       "script" : "SteviaExport.js",
       "handler" : "onRun",
       "shortcut" : "command alt l",
-      "name" : "Copy Stevia code to clipboard",
+      "name" : "Copy Stevia Code",
       "identifier" : "SteviaExport"
     }
   ],
 "menu" :
 {
-  "title" : "Copy UIKit code",
+  "title" : " 📲 Sketch to Swift",
   "items" :
   [
    "UIKitExport",

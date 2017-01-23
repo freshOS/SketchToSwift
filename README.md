@@ -50,7 +50,7 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 ## Improvements
 
 #### Fonts
-- Detect SF Display fonts and use `.systemFont(of:x, weight:UIFontWeightX)` instead of font name
+- Find a way to export fonts ?
 
 #### Text
 - Detect Text in style caps -> apply uppercased
@@ -61,7 +61,6 @@ By resizing the artboard with the scale tool, you'll make sure the script will g
 - Multicolor -> Generate AttributedString
 
 #### Colors
-- Detect native and write ex: . red . white. black etc
 - UIColors replace by custom ones?
 - UIColors oftenThe same refactor in one variable
 
