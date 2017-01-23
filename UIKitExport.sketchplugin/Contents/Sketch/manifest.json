@@ -1,7 +1,7 @@
 {
     "name" : "Export for UIKit",
     "identifier" : "com.sachadso.UIKit",
-    "version" : "0.0.4",
+    "version" : "0.0.5",
     "description" : "Export UIKit code directly for Sketch!",
     "authorEmail" : "sachadso@gmail.com",
     "author" : "Sacha Durand Saint Omer",

@@ -23,7 +23,7 @@ function parseSingleElement(context) {
   selection.iterate(function(item) {
     if (item.isText) {
       write(uikitDeclarationsForSingleText(item))
-      write(`${sanitizeName(item.name)}.text = "${item.text}"`)
+      write(`${sanitizeName(item.name)}.text = ${formattedTextForText(item.text)}`)
       write(uikitStyleForText(item))
     }
   });
@@ -42,6 +42,18 @@ function parseSingleElement(context) {
   }
 
 }
+
+function formattedTextForText(t) {
+    if (t == t.toUpperCase()) {
+      return `"${capitalizedCase(t.toLowerCase())}".uppercased()`
+    } else {
+      return  `"${t}"`
+    }
+}
+
+function capitalizedCase(string) { 
+  return string.charAt(0).toUpperCase() + string.slice(1); 
+} 
 
 
 function parseArtboard(context) {
@@ -121,7 +133,7 @@ function parseArtboard(context) {
     var elementName = sanitizeName(v.name)
     v.iterate(function(item) {
       if (item.isText) {
-        write(`        ${elementName}.setTitle("${item.text}",for: .normal)`)
+        write(`        ${elementName}.setTitle(${formattedTextForText(item.text)},for: .normal)`)
         //Title color
         var color = item.sketchObject.textColor()
         write(`        ${elementName}.setTitleColor(${uiColorLineForColor(color)}, for: . normal)`)
@@ -412,7 +424,7 @@ function uikitLayout(elements) {
 
 function uikitContentForLabels(labels) {
   var contentStr = labels.map(
-    l => `        ${sanitizeName(l.name)}.text = "${l.text}"`
+    l => `        ${sanitizeName(l.name)}.text = ${formattedTextForText(l.text)}`
   ).join('\n')
 
   var s = "        // Content \n"
